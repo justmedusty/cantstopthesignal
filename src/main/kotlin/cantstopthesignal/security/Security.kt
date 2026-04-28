@@ -8,12 +8,13 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 
 fun Application.configureSecurity() {
-    val jwtAudience = "jwt-audience"
-    val jwtDomain = "https://jwt-provider-domain/"
-    val jwtRealm = "ktor sample app"
-    val jwtSecret = "secret"
+    // Please read the jwt property from the config file if you are using EngineMain
+    val jwtAudience = "cantstopthesignal"
+    val jwtDomain = "TBD
+    val jwtRealm = "cantstopthesignal"
+    val jwtSecret = System.getenv("JWT_SECRET")
     authentication {
-        jwt {
+        jwt(name = "jwt") {
             realm = jwtRealm
             verifier(
                 JWT
@@ -28,23 +29,14 @@ fun Application.configureSecurity() {
         }
     }
     authentication {
-        basic(name = "myauth1") {
-            realm = "Ktor Server"
+        basic(name = "basic") {
+            realm = "cantstopthesignal"
             validate { credentials ->
-                if (credentials.name == credentials.password) {
-                    UserIdPrincipal(credentials.name)
-                } else {
-                    null
-                }
+                if (verifyCredentials(credentials.name, credentials.password)
+                ) UserIdPrincipal(credentials.name) else null
             }
         }
-    
-        form(name = "myauth2") {
-            userParamName = "user"
-            passwordParamName = "password"
-            challenge {
-                /**/
-            }
-        }
+
+
     }
 }

@@ -30,7 +30,11 @@ dependencies {
     implementation(libs.exposed.core)
     implementation(libs.exposed.dao)
     implementation(libs.exposed.jdbc)
-
+    implementation("at.favre.lib:bcrypt:0.10.2")
+    implementation("io.ktor:ktor-server-call-logging-jvm")
+    runtimeOnly("org.pgpainless:pgpainless-core:2.0.3")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.84")
+    implementation("org.bouncycastle:bcpg-jdk18on:1.84")
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
 }

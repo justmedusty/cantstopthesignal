@@ -32,9 +32,12 @@ dependencies {
     implementation(libs.exposed.jdbc)
     implementation("at.favre.lib:bcrypt:0.10.2")
     implementation("io.ktor:ktor-server-call-logging-jvm")
-    runtimeOnly("org.pgpainless:pgpainless-core:2.0.3")
+    implementation("io.github.oshai:kotlin-logging:8.0.01")
+    implementation("org.pgpainless:pgpainless-core:2.0.3")
     implementation("org.bouncycastle:bcprov-jdk18on:1.84")
     implementation("org.bouncycastle:bcpg-jdk18on:1.84")
+    // Source: https://mvnrepository.com/artifact/org.mindrot/jbcrypt
+    implementation("org.mindrot:jbcrypt:0.4")
     testImplementation(kotlin("test"))
     testImplementation(ktorLibs.server.testHost)
 }

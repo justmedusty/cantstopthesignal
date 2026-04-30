@@ -3,6 +3,7 @@ package com.freedom
 import io.ktor.server.application.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.freedom.cantstopthesignal.helper.verifyCredentials
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*

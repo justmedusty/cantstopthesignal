@@ -1,4 +1,4 @@
-package com.freedom.cantstopthesignal.database.dsl
+package com.freedom.cantstopthesignal.database.dsl.table_definitions
 
 import org.jetbrains.exposed.v1.javatime.datetime
 import org.jetbrains.exposed.v1.core.Column

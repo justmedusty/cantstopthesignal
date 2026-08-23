@@ -6,19 +6,19 @@ I built the compose file with podman in mind rather than docker, but docker can 
 use podman. I strongly recommend using Luks encryption for your entire disk, at the very least whichever disk the
 database is on. Use a strong password and do not back it up online or use it online. <br>
 
-1. On your server box, run git clone https://codeberg.org/TemetNosce/CantStopTheSignal.git or if codeberg is down you
+1. On your server box, run `git clone https://codeberg.org/TemetNosce/CantStopTheSignal.git` or if codeberg is down you
    can also use https://github.com/justmedusty/CantStopTheSignal.git <br>
 2. Inside your build directory, you will **run the secret_setup.sh script** , or place the files that it creates
    manually yourself. Once the script is run, you can inspect the files in the secrets directory. You may change any of
    them if you would like. The admin password can be easily changed so that can be simpler so long as you change it, if
    it is very simple, upon first login. <br>
-3. Ensure that the custom fields in resources/application.yaml match what you want, you can change the name, topic,
+3. Ensure that the custom fields in src/main/resources/application.yaml match what you want, you can change the name, topic,
    motd, message_deletion_window_hours, but be aware that choosing invite only , signups_disabled, pgp_login_only,
    it
    will NOT be changeable through the admin panel. These can all be set dynamically by admins however that is only
    if
    these values are set to false in the config. Otherwise they are **hard set to ON** <br>
-   From the root directory after having all 3 secrets files ready, you will run
+   From the **root directory** after having all 3 secrets files ready, you will run
    > podman-compose up -d
    >
    and wait for it
@@ -46,17 +46,17 @@ database is on. Use a strong password and do not back it up online or use it onl
 > port = 8080<br>
 > keys = your-service-name.dat<br>
 >
-to your tunnels.conf file, and restart i2pd or reboot your server. Afterward navigate to 127.0.0.1:7070 and under the
-i2p tunnels banner, you will see under the Servers banner the b32 beside your-service-name from above. You will
-take ******.b32.i2p and paste that into your browser on a browser set up for I2P to visit your webpage remotely. You can
-share this b32 with anyone who you wish to know about your forum. More info for server tunnel setup
-at https://docs.i2pd.website/en/latest/user-guide/tunnels/.
-You could try setting up encrypted lease sets if you are running a private invite-only instance to keep it a bit more
-private. <br>
+   to your tunnels.conf file, and restart i2pd or reboot your server. Afterward navigate to 127.0.0.1:7070 and under the
+   i2p tunnels banner, you will see under the Servers banner the b32 beside your-service-name from above. You will
+   take ******.b32.i2p and paste that into your browser on a browser set up for I2P to visit your webpage remotely. You can
+   share this b32 with anyone who you wish to know about your forum. More info for server tunnel setup
+   at https://docs.i2pd.website/en/latest/user-guide/tunnels/.
+   You could try setting up encrypted lease sets if you are running a private invite-only instance to keep it a bit more
+   private. <br>
 
 8. Your webservice is now up and running and ready to be used by the world in an anonymous fashion. The directory in
-   which you initially git cloned contains a freedom_for_all directory, this directory has your service database in it.
-   This is what you will copy for backups. Inside the same initial root project directory is where you can run
+which you initially git cloned contains a freedom_for_all directory, this directory has your service database in it.
+This is what you will copy for backups. Inside the same initial root project directory is where you can run
 
 > podman-compose down
 >
@@ -68,6 +68,11 @@ list and running
 
 > podman start image_hash.
 >
+
+If you are using systemd you can refer to https://www.redhat.com/en/blog/container-systemd-persist-reboot for running your <br>
+containers automatically. I do not use systemd so I just manually cd into the original cloned git repo from which I ran everything <br>
+above and run podman-compose up -d each time I wish to start it again. It's a server so I don't need to do this that often. <br>
+You can easily write your own init script to bring up your containers. Open an issue here if you need help with any of this <br>
 
 # Features
 

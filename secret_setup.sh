@@ -19,6 +19,6 @@ else
 fi
 
 
-if [[ -z $(grep 'secrets' .gitignore) ]]; then
+if [[ -e .gitignore && -z $(grep 'secrets' .gitignore) ]]; then
   printf "secrets/\n.env\n*.env\n" >> .gitignore
 fi

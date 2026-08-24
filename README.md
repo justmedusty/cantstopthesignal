@@ -2,8 +2,7 @@
 
 # Building and Deploying
 
-I built the compose file with podman in mind rather than docker, but docker can be used as well. The instructions will
-use podman. I strongly recommend using Luks encryption for your entire disk, at the very least whichever disk the
+I strongly recommend using LUKS encryption for your entire disk, at the very least whichever disk/partition the
 database is on. Use a strong password and do not back it up online or use it online. <br>
 
 1. On your server box, run `git clone https://codeberg.org/TemetNosce/CantStopTheSignal.git` or if codeberg is down you
@@ -17,13 +16,13 @@ database is on. Use a strong password and do not back it up online or use it onl
    it
    will NOT be changeable through the admin panel. These can all be set dynamically by admins however that is only
    if
-   these values are set to false in the config. Otherwise they are **hard set to ON** <br>
+   these values are set to false in the config. Otherwise, they are **hard set to ON** <br>
    From the **root directory** after having all 3 secrets files ready, you will run
-   > podman-compose up -d
+   > docker-compose up -d
    >
    and wait for it
    to be complete, when it is done, you can check the status with (while still in the root directory)
-   > podman-compose ps
+   > docker-compose ps
    >
    and ensure neither the postgres container nor the main server container have exited. <br>
 4. If both containers show status as UP, then you can access the local service either on your server box if you have a
@@ -58,21 +57,16 @@ database is on. Use a strong password and do not back it up online or use it onl
 which you initially git cloned contains a freedom_for_all directory, this directory has your service database in it.
 This is what you will copy for backups. Inside the same initial root project directory is where you can run
 
-> podman-compose down
+> docker-compose down
 >
 to bring your service down for a backup or some other change you may wish to make. You can start the containers back up
-again with podman-compose up -d from that directory or finding the images in the
-> podman images
+again with docker-compose up -d from that directory or finding the images in the
+> docker images
 >
 list and running
 
-> podman start image_hash.
+> docker start image_hash.
 >
-
-If you are using systemd you can refer to https://www.redhat.com/en/blog/container-systemd-persist-reboot for running your <br>
-containers automatically. I do not use systemd so I just manually cd into the original cloned git repo from which I ran everything <br>
-above and run podman-compose up -d each time I wish to start it again. It's a server so I don't need to do this that often. <br>
-You can easily write your own init script to bring up your containers. Open an issue here if you need help with any of this <br>
 
 # Features
 

@@ -54,8 +54,12 @@ database is on. Use a strong password and do not back it up online or use it onl
    private. <br>
 
 8. Your webservice is now up and running and ready to be used by the world in an anonymous fashion. The directory in
-which you initially git cloned contains a freedom_for_all directory, this directory has your service database in it.
-This is what you will copy for backups. Inside the same initial root project directory is where you can run
+which you initially git cloned contains a freedom_for_all directory, this directory has your service database in it. 
+This is what you will copy for backups. Inside the same initial root project directory is where you can run. The default 
+admin account can be logged into with username 'admin' and password is whatever was in secrets/adminpassword.txt. If the password
+is simple please change it in the profile settings page inside the service. You can also change the username if you do not like
+'admin'. If you want maximum security you can add a PGP key to your admin accounnt profile and remove your password, all which
+can be done within the profile settings area within the webservice, and do PGP login only.
 
 > docker-compose down
 >

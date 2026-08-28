@@ -72,11 +72,19 @@ fun verifySignature(username: String, message: String): Boolean {
         if (!publicFingerprint.equals(privateFingerPrint)) {
             return false
         }
-        val recovered = outputStream.toString(Charsets.UTF_8.name())
+        var recovered = outputStream.toString(Charsets.UTF_8.name())
         logger.debug { "Signature verification against expected challenge string..." }
         val expectedMessage = pgpChallengeHashSet[username]?.challengeString ?: return false
         logger.debug { "Signature verification success : ${expectedMessage == recovered}" }
-        return recovered == expectedMessage
+
+        recovered = when {
+            recovered.endsWith("\r\n") -> recovered.dropLast(2)
+            recovered.endsWith("\n") -> recovered.dropLast(1)
+            recovered.endsWith("\r") -> recovered.dropLast(1)
+            else -> recovered
+        }
+
+        return (recovered == expectedMessage)
     } catch (e: Exception) {
         logger.info(e) { "Signature verification failed" }
         return false

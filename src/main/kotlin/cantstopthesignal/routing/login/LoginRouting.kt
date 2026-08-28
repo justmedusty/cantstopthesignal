@@ -122,13 +122,7 @@ fun Application.configureLoginRoutes() {
             val signedChallenge = params["challenge"]
                 ?: return@post call.respondRedirect("/login/pgpchallenge?error=You must provide a signed challenge")
 
-            if (!isPgpMessageOrPgpKey(signedChallenge)) {
-                val error = "The challenge doesn't have the required format"
-                call.respondRedirect("/login/pgpchallenge?error=$error")
-            }
-            val fixedMessage = convertSignedPgpMessage(signedChallenge)
-
-            if (!verifySignature(username, fixedMessage)) {
+            if (!verifySignature(username, signedChallenge)) {
                 val error = "Your challenge is either incorrectly signed, expired, or does not exist."
                 call.respondRedirect("/login/pgpchallenge?error=$error")
             }

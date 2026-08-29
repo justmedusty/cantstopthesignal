@@ -4,6 +4,7 @@ import cantstopthesignal.cryptography.*
 import cantstopthesignal.database.sitewide_permissions.isInviteOnlyEnabled
 import cantstopthesignal.database.users.getPublicKey
 import cantstopthesignal.database.users.getUserId
+import cantstopthesignal.database.users.updateLastLogin
 import cantstopthesignal.database.users.userNameAlreadyExists
 import cantstopthesignal.database.users.verifyCredentials
 import cantstopthesignal.enums.Length
@@ -128,6 +129,7 @@ fun Application.configureLoginRoutes() {
             }
 
 
+
             val token = (createJWT(
                 JWTConfig(
                     siteConfig?.audience ?: "someoneisbadanddidntsetthis",
@@ -146,6 +148,8 @@ fun Application.configureLoginRoutes() {
                     path = "/"
                 ),
             )
+
+            updateLastLogin(getUserId(username)!!) // we can assert non null since if username was invalid at this point it would have failed before getting here
             //Redirect user to the home page
             return@post call.respondRedirect("/feed")
         }
@@ -166,7 +170,7 @@ fun Application.configureLoginRoutes() {
 
 
         post("/login") {
-            if (siteConfig?.pgpLoginOnly == true) {
+            if (siteConfig.pgpLoginOnly) {
                 return@post call.respondRedirect("/login/pgpchallenge")
             }
 

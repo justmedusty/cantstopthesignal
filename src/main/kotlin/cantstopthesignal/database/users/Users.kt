@@ -59,8 +59,10 @@ fun userNameAlreadyExists(userName: String): Boolean {
 
 fun updateLastLogin(userId: Long): Boolean {
     return try {
-        ProfileData.update({ ProfileData.userId eq userId }) {
-            it[lastLogin] = LocalDateTime.now(ZoneOffset.UTC)
+        transaction {
+            ProfileData.update({ ProfileData.userId eq userId }) {
+                it[lastLogin] = LocalDateTime.now(ZoneOffset.UTC)
+            }
         }
         true
     } catch (e: Exception) {

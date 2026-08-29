@@ -114,6 +114,8 @@ fun postComment(content: String, commenterId: Long, postId: Long, isReply: Boole
                 commenterId,
                 Notif.POST_COMMENT.value
             )
+
+
             if (isReply) {
                 val parentCommenterId =
                     getUserIdFromCommentId(parentCommentId!! /* We will also sanitize this higher up */)

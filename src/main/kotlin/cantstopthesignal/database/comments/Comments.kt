@@ -106,14 +106,14 @@ fun postComment(content: String, commenterId: Long, postId: Long, isReply: Boole
                 it[timeStamp] = LocalDateTime.now(ZoneOffset.UTC)
             } get Comments.id
             val postOwnerId = getPostOwnerId(postId)
+
             insertNotification(
                 postId,
-                null,
-                postOwnerId!! /* We will verify this at a higher layer */,
+                ret,
+                postOwnerId!!,
                 commenterId,
                 Notif.POST_COMMENT.value
             )
-
             if (isReply) {
                 val parentCommenterId =
                     getUserIdFromCommentId(parentCommentId!! /* We will also sanitize this higher up */)
@@ -124,15 +124,8 @@ fun postComment(content: String, commenterId: Long, postId: Long, isReply: Boole
                     commenterId,
                     Notif.COMMENT_REPLY.value
                 )
-            } else {
-                insertNotification(
-                    postId,
-                    ret,
-                    postOwnerId,
-                    commenterId,
-                    Notif.POST_COMMENT.value
-                )
             }
+
             ret
         }
     } catch (e: Exception) {
